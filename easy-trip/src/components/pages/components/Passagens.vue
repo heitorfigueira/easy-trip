@@ -14,7 +14,7 @@
       </v-radio-group>
       <v-row class="pl-4" dense>
         <v-col cols="3">
-          <v-combobox v-model="origem" v-on:change="buscarCidades" :items="cidades"
+          <v-combobox v-model="origem" :items="cidades"
             label="Selecione sua origem...">
           </v-combobox>
         </v-col>
@@ -167,7 +167,7 @@ export default {
         return this.aeroportos.map(airport => { return airport.placeName })
       },
       passagensFiltradas () {
-        return this.passagens[0].ida.map( (passagem, index) => 
+        return this.passagens[0]?.ida.map( (passagem, index) => 
           { return {
             id: index,
             destino: passagem.cidadeDestino + ', ' + passagem.paisDestino + ' - ' + passagem.aeroportoDestino,
@@ -209,20 +209,11 @@ export default {
       },
       pesquisar () {
 
-      },
-      buscarCidades () {
-        let query = {
-          query: this.origem
-        }
-        this.listarAeroportos(query)
       }
     },
     mounted () {
+      this.listarAeroportos()
       let query = {
-        query: 'm'
-      }
-      this.listarAeroportos(query)
-      query = {
         query: {       
         origem: "GRU-sky",
         destino: "MIA-sky",

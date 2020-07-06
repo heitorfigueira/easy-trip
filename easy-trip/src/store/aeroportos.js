@@ -15,8 +15,10 @@ const aeroportos = {
     }
   },
   actions: {
-    async listarAeroportos(context, { query }) {
-      console.log(query)
+    async listarAeroportos(context) {
+      let query = {
+        query: 's'
+      }
       let result = await skyscanner.places(query)
       console.log('resultadoListarAeroportos', result)
       let aeroportos = result.data.airports
