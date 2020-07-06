@@ -88,7 +88,7 @@
       </v-row>
     </v-container>
     <v-container class="px-3 pt-3 mt-5 my-10">
-      <v-row class="font-weight-bold mx-10 my-2">
+      <v-row class="font-weight-bold mx-10 my-2 pl-2" dense>
         <v-col cols="3">
           Destino
         </v-col>
@@ -107,8 +107,7 @@
         <v-col  cols="1"></v-col>
       </v-row>
       <v-row v-for="(passagem, index) in passagensFiltradas" :key="'passagem' + index"
-        style="border: 1px solid lightgrey; border-radius: 5px;"
-        class="mx-10 my-4">
+        class="mx-10 my-4 elevation-3">
         <v-col cols="3" class="font-weight-bold">
           {{ passagem.destino }}
         </v-col>
