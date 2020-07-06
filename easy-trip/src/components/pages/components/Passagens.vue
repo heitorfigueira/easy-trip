@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-container class="pl-3 pt-3" fluid>
+    <v-container class="pl-4" fluid>
       <h3>Passagens aéreas com facilidade!</h3>
       <v-radio-group v-model="radioGroup" dense>
-        <v-row justify="start" class="pl-2" dense>
+        <v-row justify="start" class="pl-4" dense>
           <v-col cols="1">
             <v-radio key="Ida" label="Só ida" :value="1"></v-radio>
           </v-col>
@@ -12,7 +12,7 @@
           </v-col>
         </v-row>
       </v-radio-group>
-      <v-row  class="pl-2">
+      <v-row class="pl-4" dense>
         <v-col cols="3">
           <v-combobox v-model="origem" :items="origens"
             label="Selecione a ORIGEM da sua viagem">
@@ -59,7 +59,7 @@
           </v-menu>
         </v-col>
       </v-row>
-      <v-row  class="pl-2">
+      <v-row  class="pl-4" dense>
         <v-col cols="1">
           <v-text-field 
             v-model.number="adultos" 
@@ -80,12 +80,15 @@
           </v-combobox>
         </v-col>
         <v-col cols="2" offset="6">
-          <v-btn color="primary" @click="pesquisar">Pesquisar</v-btn>
+          <v-btn class="mt-3 ml-3" color="primary" @click="pesquisar">
+            <v-icon class="mr-2">mdi-magnify</v-icon>
+            Pesquisar
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
     <v-container class="px-3 pt-3 mt-5 my-10">
-      <v-row class="font-weight-bold mx-10 my-2">
+      <v-row class="font-weight-bold mx-10 my-2 pl-2" dense>
         <v-col cols="3">
           Destino
         </v-col>
@@ -104,8 +107,7 @@
         <v-col  cols="1"></v-col>
       </v-row>
       <v-row v-for="(passagem, index) in passagensFiltradas" :key="'passagem' + index"
-        style="border: 1px solid lightgrey; border-radius: 5px;"
-        class="mx-10 my-4">
+        class="mx-10 my-4 elevation-3">
         <v-col cols="3" class="font-weight-bold">
           {{ passagem.destino }}
         </v-col>
@@ -121,9 +123,9 @@
         <v-col  cols="1" align="center">
           {{ passagem.lugares }}
         </v-col>
-        <v-col>
-          <v-btn @click="pesquisar">
-            <v-icon>mdi-info</v-icon>
+        <v-col cols="1">
+          <v-btn depressed text small @click="detalhe(passagem.id)">
+            <v-icon>mdi-information</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -140,6 +142,7 @@ export default {
       passagens: [],
       passagensFiltradas: [
         {
+          id: 1,
           destino: 'São Paulo, SP - Brasil',
           origem: 'Belo Horizonte, BH - Brasil',
           data: new Date().toISOString().substr(0, 10),
@@ -147,6 +150,7 @@ export default {
           lugares: 36
         },
         {
+          id: 2,
           destino: 'São Paulo, SP - Brasil',
           origem: 'Belo Horizonte, BH - Brasil',
           data: new Date().toISOString().substr(0, 10),
@@ -154,6 +158,7 @@ export default {
           lugares: 36
         },
         {
+          id: 3,
           destino: 'São Paulo, SP - Brasil',
           origem: 'Belo Horizonte, BH - Brasil',
           data: new Date().toISOString().substr(0, 10),
@@ -161,6 +166,7 @@ export default {
           lugares: 36
         },
         {
+          id: 4,
           destino: 'São Paulo, SP - Brasil',
           origem: 'Belo Horizonte, BH - Brasil',
           data: new Date().toISOString().substr(0, 10),

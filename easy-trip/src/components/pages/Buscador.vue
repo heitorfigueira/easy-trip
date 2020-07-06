@@ -4,6 +4,7 @@
       background-color="deep-purple accent-4"
       class="elevation-2">
       <v-tab v-for="i in tabs" :key="'tab' + i.name" :href="`#tab-${i.name}`" >
+        <v-icon class="mr-2">{{ i.icon }}</v-icon>
         {{ i.name }}
       </v-tab>
 
@@ -30,11 +31,11 @@ export default {
         tabs: [
           { 
             name: 'Passagens', 
-            icon: 'mdi-flight',
+            icon: 'mdi-airplane-takeoff',
           }, 
           { 
             name: 'Hospedagens', 
-            icon: 'mdi-hotels',
+            icon: 'mdi-home-city',
           }
         ],
         radioGroup: 1,
