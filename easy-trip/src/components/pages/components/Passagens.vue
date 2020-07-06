@@ -167,7 +167,7 @@ export default {
         return this.aeroportos.map(airport => { return airport.placeName })
       },
       passagensFiltradas () {
-        return this.passagens[0]?.ida.map( (passagem, index) => 
+        return this.passagens[0].ida.map( (passagem, index) => 
           { return {
             id: index,
             destino: passagem.cidadeDestino + ', ' + passagem.paisDestino + ' - ' + passagem.aeroportoDestino,
