@@ -77,13 +77,17 @@
         </v-col>
       </v-row>
     </v-container>
+    <GridHoteis></GridHoteis>
   </div>
 </template>
 
 <script>
+import GridHoteis from '../components/GridHoteis.vue'
 export default {
     name: 'Passagens',
-    components: {},
+    components: {
+      GridHoteis
+    },
     data: vm => ({
       hospedagens: [],
       cidades: [ 'São Paulo, SP - Brasil', 'Brasília, DF - Brasil', 'Belo Horizonte, BH - Brasil', 'Guarulhos, SP - Brasil' ],

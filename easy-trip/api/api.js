@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-var baseUrl = "http://18.206.11.51/"
+var baseUrl = "http://18.206.11.51/api/"
 
 const api = {
   get: async (route, query) => {
