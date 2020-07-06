@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-container class="pl-3 pt-3">
+    <v-container class="pl-4" fluid>
       <h3>Serviços de hotelaria de qualidade!</h3>
-      <v-row  class="pl-2">
+      <v-row  class="pl-4" dense>
         <v-col cols="2">
           <v-combobox v-model="cidade" :items="cidades"
             label="Selecione a cidade">
@@ -42,11 +42,8 @@
             <v-date-picker v-model="dataSaida" no-title @input="menuSaida = false"></v-date-picker>
           </v-menu>
         </v-col>
-        <v-col cols="2" offset="4" class="pt-6 pl-12">
-          <v-btn  color="primary" @click="pesquisar">Pesquisar</v-btn>
-        </v-col>
       </v-row>
-      <v-row class="pl-2">
+      <v-row class="pl-4">
         <v-col cols="1">
           <v-text-field 
             v-model.number="quartos" 
@@ -74,6 +71,12 @@
             label="Menores" 
             type="number">
           </v-text-field>
+        </v-col>
+        <v-col cols="2" offset="6" class="pt-6 pl-3">
+          <v-btn class="mt-3" color="primary" @click="pesquisar">
+            <v-icon class="mr-2">mdi-magnify</v-icon>
+            Pesquisar
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
