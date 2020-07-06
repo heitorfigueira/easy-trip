@@ -14,13 +14,13 @@
       </v-radio-group>
       <v-row class="pl-4" dense>
         <v-col cols="3">
-          <v-combobox v-model="origem" :items="origens"
-            label="Selecione a ORIGEM da sua viagem">
+          <v-combobox v-model="origem" v-on:change="buscarCidades" :items="cidades"
+            label="Selecione sua origem...">
           </v-combobox>
         </v-col>
         <v-col cols="3">
-          <v-combobox v-model="destino" :items="destinos"
-            label="Selecione o DESTINO da sua viagem">
+          <v-combobox v-model="destino" :items="cidades"
+            label="Selecione seu destino...">
           </v-combobox>
         </v-col>
         <v-col cols="2">
@@ -107,7 +107,7 @@
         <v-col  cols="1"></v-col>
       </v-row>
       <v-row v-for="(passagem, index) in passagensFiltradas" :key="'passagem' + index"
-        class="mx-10 my-4 elevation-3">
+        class="mx-10 my-4 elevation-3 text-caption">
         <v-col cols="3" class="font-weight-bold">
           {{ passagem.destino }}
         </v-col>
@@ -115,7 +115,7 @@
           {{ passagem.origem }}
         </v-col>
         <v-col  cols="2" align="center">
-          {{ formatDate(passagem.data) }}
+          {{ passagem.data }}
         </v-col>
         <v-col  cols="2" align="center">
           {{ formatCurrency(passagem.custo) }}
@@ -124,7 +124,7 @@
           {{ passagem.lugares }}
         </v-col>
         <v-col cols="1">
-          <v-btn depressed text small @click="detalhe(passagem.id)">
+          <v-btn icon depressed text small>
             <v-icon>mdi-information</v-icon>
           </v-btn>
         </v-col>
@@ -134,49 +134,14 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
     name: 'Passagens',
     components: {},
     data: vm => ({
       radioGroup: 1,
-      passagens: [],
-      passagensFiltradas: [
-        {
-          id: 1,
-          destino: 'São Paulo, SP - Brasil',
-          origem: 'Belo Horizonte, BH - Brasil',
-          data: new Date().toISOString().substr(0, 10),
-          custo: 2450,
-          lugares: 36
-        },
-        {
-          id: 2,
-          destino: 'São Paulo, SP - Brasil',
-          origem: 'Belo Horizonte, BH - Brasil',
-          data: new Date().toISOString().substr(0, 10),
-          custo: 2450,
-          lugares: 36
-        },
-        {
-          id: 3,
-          destino: 'São Paulo, SP - Brasil',
-          origem: 'Belo Horizonte, BH - Brasil',
-          data: new Date().toISOString().substr(0, 10),
-          custo: 2450,
-          lugares: 36
-        },
-        {
-          id: 4,
-          destino: 'São Paulo, SP - Brasil',
-          origem: 'Belo Horizonte, BH - Brasil',
-          data: new Date().toISOString().substr(0, 10),
-          custo: 2450,
-          lugares: 36
-        },
-      ],
-      destinos: [ 'São Paulo, SP - Brasil', 'Brasília, DF - Brasil' ],
       destino: '',
-      origens: [ 'Belo Horizonte, BH - Brasil', 'Guarulhos, SP - Brasil' ],
       origem: '',
       menuIda: false,
       dataIda: new Date().toISOString().substr(0, 10),
@@ -187,11 +152,31 @@ export default {
       adultos: 0,
       criancas: 0,
       tiposPassagem: [ 'Econômica', 'Executiva' ],
-      tipoPassagem: ''
+      tipoPassagem: '',
+      detalheCard: false
     }),
     computed: {
+      ...mapGetters({
+        aeroportos: 'aeroportos/listaAeroportos',
+        passagens: 'aeroportos/listaPassagens'
+      }),
       totalAssentos () {
         return this.adultos + this.criancas
+      },
+      cidades () {
+        return this.aeroportos.map(airport => { return airport.placeName })
+      },
+      passagensFiltradas () {
+        return this.passagens[0].ida.map( (passagem, index) => 
+          { return {
+            id: index,
+            destino: passagem.cidadeDestino + ', ' + passagem.paisDestino + ' - ' + passagem.aeroportoDestino,
+            origem: passagem.cidadeOrigem + ' ' + passagem.paisOrigem + ' - ' + passagem.aeroportoOrigem,
+            data: passagem.dataPartida,
+            custo: passagem.preco,
+            lugares: 20
+          }
+        })
       }
     },
     watch: {
@@ -203,6 +188,10 @@ export default {
       },
     },
     methods: {
+      ...mapActions({
+        listarAeroportos: 'aeroportos/listarAeroportos',
+        listarPassagens: 'aeroportos/listarPassagens',
+      }),
       formatDate (date) {
         if (!date) return null
 
@@ -220,8 +209,27 @@ export default {
       },
       pesquisar () {
 
+      },
+      buscarCidades () {
+        let query = {
+          query: this.origem
+        }
+        this.listarAeroportos(query)
       }
     },
-    mounted () {}
+    mounted () {
+      let query = {
+        query: 'm'
+      }
+      this.listarAeroportos(query)
+      query = {
+        query: {       
+        origem: "GRU-sky",
+        destino: "MIA-sky",
+        dataInicio: "2020-09-08" 
+      }
+      }
+      this.listarPassagens(query)
+    }
 }
 </script>

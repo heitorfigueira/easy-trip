@@ -1,6 +1,6 @@
 import api from './api.js'
 
-const url = 'skyscanner'
+const url = 'skyscanner/'
 
 const skyscanner = {
   places: (obj) => api.post(url + 'places', obj),
