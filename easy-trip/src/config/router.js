@@ -1,4 +1,5 @@
 import Buscador from '../components/pages/Buscador.vue'
+import PaginaNaoEncontrada from '../components/pages/PaginaNaoEncontrada.vue'
 
 
 const routes = [
@@ -6,7 +7,13 @@ const routes = [
         path: '/',
         component: Buscador,
         name: 'buscador',
-    }
+    },
+    {
+        path: '*',
+        component: PaginaNaoEncontrada,
+        name: 'PaginaNaoEncontrada',
+    },
+    
 ]
 
 import Vue from 'vue'
