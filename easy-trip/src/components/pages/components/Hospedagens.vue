@@ -4,7 +4,13 @@
       <h3>Serviços de hotelaria de qualidade!</h3>
       <v-row  class="pl-4" dense>
         <v-col cols="2">
-          <v-combobox v-model="cidade" :items="cidades"
+          <v-combobox 
+            @change="listarLocais({ query: cidade })"
+            v-model="cidade" 
+            :items="nomesLocais"
+            item-value="id"
+            item-text="nome"
+            :loading="carregandoLista"
             label="Selecione a cidade">
           </v-combobox>
         </v-col>
@@ -22,7 +28,7 @@
                 v-on="on">
               </v-text-field>
             </template>
-            <v-date-picker v-model="dataEntrada" no-title @input="menuEntrada = false"></v-date-picker>
+            <v-date-picker v-model="dataEntrada" no-title @input="menuEntrada = false" @change="adicionarSeteDiasNaSaida($event)"></v-date-picker>
           </v-menu>
         </v-col>
         <v-col cols="2">
@@ -46,29 +52,8 @@
       <v-row class="pl-4">
         <v-col cols="1">
           <v-text-field 
-            v-model.number="quartos" 
-            label="Quartos" 
-            type="number">
-          </v-text-field>
-        </v-col>
-        <v-col cols="1">
-          <v-text-field 
-            v-model.number="camas" 
-            label="Camas" 
-            type="number">
-          </v-text-field>
-        </v-col>
-        <v-col cols="1">
-          <v-text-field 
             v-model.number="adultos" 
             label="Adultos" 
-            type="number">
-          </v-text-field>
-        </v-col>
-        <v-col cols="1">
-          <v-text-field 
-            v-model.number="menores" 
-            label="Menores" 
             type="number">
           </v-text-field>
         </v-col>
@@ -86,6 +71,8 @@
 
 <script>
 import GridHoteis from '../components/GridHoteis.vue'
+import { mapGetters, mapActions } from 'vuex'
+import * as moment from 'moment'
 export default {
     name: 'Passagens',
     components: {
@@ -94,7 +81,7 @@ export default {
     data: vm => ({
       hospedagens: [],
       cidades: [ 'São Paulo, SP - Brasil', 'Brasília, DF - Brasil', 'Belo Horizonte, BH - Brasil', 'Guarulhos, SP - Brasil' ],
-      cidade: '',
+      cidade: {id: 160256, nome: 'São Paulo'},
       menuEntrada: false,
       dataEntrada: new Date().toISOString().substr(0, 10),
       dataEntradaFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
@@ -103,19 +90,28 @@ export default {
       dataSaidaFormatted: null,
       quartos: 0,
       camas: 0,
-      adultos: 0,
-      menores: 0
+      adultos: 1
     }),
-    computed: {},
+    computed: {
+      ...mapGetters({
+        locais: 'hoteis/listaLocais',
+        nomesLocais: 'hoteis/listaNomesLocais',
+        carregandoLista: 'hoteis/carregandoLista'
+      }),
+    },
     watch: {
       dataEntrada () {
         this.dataEntradaFormatted = this.formatDate(this.dataEntrada)
       },
       dataSaida () {
         this.dataSaidaFormatted = this.formatDate(this.dataSaida)
-      },
+      }
     },
     methods: {
+      ...mapActions({
+        listarLocais: 'hoteis/listarLocais',
+        listarHoteis: 'hoteis/listarHoteis'
+      }),
       formatDate (date) {
         if (!date) return null
 
@@ -129,9 +125,24 @@ export default {
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
       },
       pesquisar () {
-        
+        let payload = {
+          destinationId: this.cidade.id,
+          pageNumber: 1,
+          pageSize: 25,
+          checkIn: moment(this.dataEntradaFormatted, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+          checkOut: moment(this.dataSaidaFormatted, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+          adults1: this.adultos
+        }
+        console.log(payload)
+        this.listarHoteis(payload)
+      },
+      adicionarSeteDiasNaSaida () {
+        let mDataEntrada = moment(this.dataEntradaFormatted, 'DD/MM/YYYY')
+        this.dataSaidaFormatted = mDataEntrada.add(7, 'days').format('DD/MM/YYYY');
       }
     },
-    mounted () {}
+    mounted () {
+      this.listarLocais({query: 'sao paulo'})
+    }
 }
 </script>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 var baseUrl = "http://18.206.11.51/api/"
+// var baseUrl = 'http://localhost:57345/'
 
 const api = {
   get: async (route, query) => {

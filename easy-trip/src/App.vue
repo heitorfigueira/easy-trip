@@ -6,6 +6,7 @@
     </v-app-bar>
     <v-main>
       <v-container>
+        <!-- <Loader></Loader> -->
         <router-view></router-view>
       </v-container>
     </v-main>
@@ -13,10 +14,13 @@
 </template>
 
 <script>
+// import Loader from './components/pages/components/Loader'
 export default {
   name: 'App',
 
-  components: {},
+  components: {
+    // Loader
+  },
 
 };
 </script>
