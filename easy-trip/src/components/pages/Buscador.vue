@@ -14,9 +14,6 @@
       <v-tab-item key="Hospedagens" value="tab-Hospedagens">
         <Hospedagens></Hospedagens>
       </v-tab-item>
-
-      <v-tab-item key="Pacotes" value="tab-Pacotes">
-      </v-tab-item>
     </v-tabs>
   </div>
 </template>
@@ -38,11 +35,7 @@ export default {
           { 
             name: 'Hospedagens', 
             icon: 'mdi-hotels',
-          }, 
-          { 
-            name: 'Pacotes', 
-            icon: 'mdi-card_travel',
-          },
+          }
         ],
         radioGroup: 1,
         passagens: [],

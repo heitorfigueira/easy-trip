@@ -42,6 +42,11 @@
             <v-date-picker v-model="dataSaida" no-title @input="menuSaida = false"></v-date-picker>
           </v-menu>
         </v-col>
+        <v-col cols="2" offset="4" class="pt-6 pl-12">
+          <v-btn  color="primary" @click="pesquisar">Pesquisar</v-btn>
+        </v-col>
+      </v-row>
+      <v-row class="pl-2">
         <v-col cols="1">
           <v-text-field 
             v-model.number="quartos" 
@@ -49,15 +54,26 @@
             type="number">
           </v-text-field>
         </v-col>
-        <!-- <v-col cols="1">
+        <v-col cols="1">
+          <v-text-field 
+            v-model.number="camas" 
+            label="Camas" 
+            type="number">
+          </v-text-field>
+        </v-col>
+        <v-col cols="1">
+          <v-text-field 
+            v-model.number="adultos" 
+            label="Adultos" 
+            type="number">
+          </v-text-field>
+        </v-col>
+        <v-col cols="1">
           <v-text-field 
             v-model.number="menores" 
             label="Menores" 
             type="number">
           </v-text-field>
-        </v-col> -->
-        <v-col cols="2" offset="3" class="pt-6 pl-12">
-          <v-btn  color="primary" @click="pesquisar">Pesquisar</v-btn>
         </v-col>
       </v-row>
     </v-content>
@@ -78,7 +94,10 @@ export default {
       menuSaida: false,
       dataSaida: new Date().toISOString().substr(0, 10),
       dataSaidaFormatted: null,
-      quartos: 0
+      quartos: 0,
+      camas: 0,
+      adultos: 0,
+      menores: 0
     }),
     computed: {},
     watch: {
