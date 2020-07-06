@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-content class="pl-3 pt-3">
+    <v-container class="pl-3 pt-3">
       <h3>Serviços de hotelaria de qualidade!</h3>
       <v-row  class="pl-2">
         <v-col cols="2">
@@ -76,7 +76,7 @@
           </v-text-field>
         </v-col>
       </v-row>
-    </v-content>
+    </v-container>
   </div>
 </template>
 

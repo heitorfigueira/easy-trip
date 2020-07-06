@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-content class="pl-3 pt-3">
+    <v-container class="pl-3 pt-3" fluid>
       <h3>Passagens aéreas com facilidade!</h3>
       <v-radio-group v-model="radioGroup" dense>
         <v-row justify="start" class="pl-2" dense>
@@ -80,10 +80,54 @@
           </v-combobox>
         </v-col>
         <v-col cols="2" offset="6">
-          <v-btn small color="primary" @click="pesquisar">Pesquisar</v-btn>
+          <v-btn color="primary" @click="pesquisar">Pesquisar</v-btn>
         </v-col>
       </v-row>
-    </v-content>
+    </v-container>
+    <v-container class="px-3 pt-3 mt-5 my-10">
+      <v-row class="font-weight-bold mx-10 my-2">
+        <v-col cols="3">
+          Destino
+        </v-col>
+        <v-col  cols="3">
+          Origem
+        </v-col>
+        <v-col  cols="2" align="center">
+          Data de Viagem
+        </v-col>
+        <v-col  cols="2" align="center">
+          Preço
+        </v-col>
+        <v-col  cols="1" align="center">
+          Assentos
+        </v-col>
+        <v-col  cols="1"></v-col>
+      </v-row>
+      <v-row v-for="(passagem, index) in passagensFiltradas" :key="'passagem' + index"
+        style="border: 1px solid lightgrey; border-radius: 5px;"
+        class="mx-10 my-4">
+        <v-col cols="3" class="font-weight-bold">
+          {{ passagem.destino }}
+        </v-col>
+        <v-col cols="3">
+          {{ passagem.origem }}
+        </v-col>
+        <v-col  cols="2" align="center">
+          {{ formatDate(passagem.data) }}
+        </v-col>
+        <v-col  cols="2" align="center">
+          {{ formatCurrency(passagem.custo) }}
+        </v-col>
+        <v-col  cols="1" align="center">
+          {{ passagem.lugares }}
+        </v-col>
+        <v-col>
+          <v-btn @click="pesquisar">
+            <v-icon>mdi-info</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -94,6 +138,36 @@ export default {
     data: vm => ({
       radioGroup: 1,
       passagens: [],
+      passagensFiltradas: [
+        {
+          destino: 'São Paulo, SP - Brasil',
+          origem: 'Belo Horizonte, BH - Brasil',
+          data: new Date().toISOString().substr(0, 10),
+          custo: 2450,
+          lugares: 36
+        },
+        {
+          destino: 'São Paulo, SP - Brasil',
+          origem: 'Belo Horizonte, BH - Brasil',
+          data: new Date().toISOString().substr(0, 10),
+          custo: 2450,
+          lugares: 36
+        },
+        {
+          destino: 'São Paulo, SP - Brasil',
+          origem: 'Belo Horizonte, BH - Brasil',
+          data: new Date().toISOString().substr(0, 10),
+          custo: 2450,
+          lugares: 36
+        },
+        {
+          destino: 'São Paulo, SP - Brasil',
+          origem: 'Belo Horizonte, BH - Brasil',
+          data: new Date().toISOString().substr(0, 10),
+          custo: 2450,
+          lugares: 36
+        },
+      ],
       destinos: [ 'São Paulo, SP - Brasil', 'Brasília, DF - Brasil' ],
       destino: '',
       origens: [ 'Belo Horizonte, BH - Brasil', 'Guarulhos, SP - Brasil' ],
@@ -134,6 +208,9 @@ export default {
 
         const [day, month, year] = date.split('/')
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+      },
+      formatCurrency (val) {
+        return val.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
       },
       pesquisar () {
 
